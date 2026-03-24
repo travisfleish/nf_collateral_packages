@@ -11,6 +11,13 @@ export type NavItem = {
   }[]
 }
 
+/** In-app NewFronts collateral routes — rendered in the hero below the main site header. */
+export type CollateralNavItem = {
+  label: string
+  href: string
+  activePathnames: string[]
+}
+
 export type FooterColumn = {
   title: string
   links: { label: string; href: string }[]
@@ -28,8 +35,8 @@ export type PolicyLink = {
 
 export const siteContent = {
   brand: {
-    name: 'Your Company',
-    homePath: '/' as const,
+    name: 'Genius Sports',
+    homePath: '/world-cup' as const,
   },
   header: {
     nav: [
@@ -122,13 +129,20 @@ export const siteContent = {
           },
         ],
       },
-    ] satisfies NavItem[],
+    ] as NavItem[],
     cta: {
       label: 'Get started',
       href: 'https://example.com',
       external: true as const,
     },
   },
+  /** Sport collateral routes — shown in the hero band below the global header. */
+  collateralNav: [
+    { label: 'World Cup', href: '/world-cup', activePathnames: ['/world-cup'] },
+    { label: 'Football', href: '/football', activePathnames: ['/football'] },
+    { label: 'Basketball', href: '/basketball', activePathnames: ['/basketball'] },
+    { label: 'Soccer', href: '/soccer', activePathnames: ['/soccer'] },
+  ] satisfies CollateralNavItem[],
   footer: {
     columns: [
       {
@@ -191,44 +205,5 @@ export const siteContent = {
       { label: 'Do Not Sell or Share My Information', href: 'https://www.geniussports.com/privacy-choices/' },
     ] satisfies PolicyLink[],
     copyright: `© ${new Date().getFullYear()} Genius Sports Group. All rights reserved.`,
-  },
-  home: {
-    meta: {
-      title: 'Home · Your Company',
-      description:
-        'Starter layout for single-page marketing sites built with the shared @genius-sports/gs-marketing-ui package.',
-    },
-    hero: {
-      eyebrow: 'Marketing starter',
-      title: 'Launch campaign pages with a consistent shell',
-      description:
-        'This page composes shared primitives—layout, typography, buttons, and cards—with small local helpers for heroes and section intros. Replace copy and routes for your next site.',
-    },
-    intro: {
-      eyebrow: 'Pattern',
-      title: 'Compose, do not fork the design system',
-      description:
-        'Keep tokens, Tailwind preset, and UI primitives in the shared package. This app only wires routing, SEO helpers, and reusable section shells.',
-      align: 'center' as const,
-    },
-    featureCards: {
-      eyebrow: 'Building blocks',
-      title: 'Three placeholder pillars',
-      description: 'Swap these cards for product-specific value props on a real campaign.',
-      items: [
-        {
-          title: 'Fast setup',
-          body: 'Clone the starter, point at the published UI package, and start composing sections.',
-        },
-        {
-          title: 'Shared look and feel',
-          body: 'Typography, color, and motion stay aligned because they live in one dependency.',
-        },
-        {
-          title: 'Room to grow',
-          body: 'Add providers, analytics, or CMS data in app code without touching the package.',
-        },
-      ],
-    },
   },
 }

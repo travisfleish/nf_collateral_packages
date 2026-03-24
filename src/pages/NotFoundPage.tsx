@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Heading, SectionShell, Text } from '@genius-sports/gs-marketing-ui'
 import { setPageMeta } from '../app/seo'
 import { siteContent } from '../content/site'
-import { SITE_HEADER_MAIN_OFFSET_CLASS } from '../components/navigation/SiteHeader'
 
 export function NotFoundPage() {
   useEffect(() => {
@@ -11,7 +10,7 @@ export function NotFoundPage() {
   }, [])
 
   return (
-    <main className={`flex flex-1 items-center py-24 ${SITE_HEADER_MAIN_OFFSET_CLASS}`}>
+    <main className="flex flex-1 items-center bg-white py-24">
       <SectionShell width="narrow" className="text-center">
         <Heading level="h1">Page not found</Heading>
         <Text variant="lead" className="mt-4">
