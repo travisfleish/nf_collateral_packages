@@ -83,7 +83,7 @@ export function SiteFooter() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.label}
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-sm bg-white/10 text-white transition-colors duration-300 ease-in-out hover:bg-white hover:text-[#060a37]"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-sm bg-white/10 text-white transition-colors duration-300 ease-in-out hover:bg-white hover:text-[#04132a]"
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
                       <path d={socialIconPaths[social.label]} />

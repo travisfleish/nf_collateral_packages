@@ -142,6 +142,7 @@ export const siteContent = {
     { label: 'Football', href: '/football', activePathnames: ['/football'] },
     { label: 'Basketball', href: '/basketball', activePathnames: ['/basketball'] },
     { label: 'Soccer', href: '/soccer', activePathnames: ['/soccer'] },
+    { label: 'Augmentation', href: '/augmentation', activePathnames: ['/augmentation'] },
   ] satisfies CollateralNavItem[],
   footer: {
     columns: [
