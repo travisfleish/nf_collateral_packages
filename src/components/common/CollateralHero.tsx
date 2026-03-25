@@ -9,7 +9,7 @@ export function CollateralHero() {
   return (
     <section
       aria-labelledby="newfronts-hero-title"
-      className="w-full shrink-0 bg-[#04132a] text-white"
+      className="w-full shrink-0 bg-pdfSurface text-white"
     >
       <div className="container mx-auto flex flex-col items-center px-4 pb-8 pt-12 md:px-6 md:pb-10 md:pt-24 lg:pb-12 lg:pt-28">
         <Heading
@@ -48,8 +48,8 @@ export function CollateralHero() {
                   <span
                     className={`relative z-20 block max-md:w-full rounded-pill px-4 py-2.5 text-center font-heading text-xs font-medium leading-none sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-3.5 lg:px-5 lg:py-[0.8rem] lg:text-[1rem] ${
                       isActive
-                        ? 'text-[#04132a]'
-                        : 'text-white transition-colors duration-300 ease-in-out group-hover:text-[#04132a]'
+                        ? 'text-pdfSurface'
+                        : 'text-white transition-colors duration-300 ease-in-out group-hover:text-pdfSurface'
                     }`}
                   >
                     {item.label}

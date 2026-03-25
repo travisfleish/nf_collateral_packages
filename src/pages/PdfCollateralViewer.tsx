@@ -2,11 +2,9 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
+import { PDF_PAGE_BACKGROUND } from '../theme/collateral'
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker
-
-/** Matches main shell (`bg-[#04132a]`). react-pdf Page defaults its wrapper to white otherwise. */
-const PDF_SURFACE_BG = '#04132a'
 
 const PDF_SWAP_FADE_SEC = 0.28
 
@@ -17,6 +15,12 @@ const PDF_LOAD_OPTIONS = {
   disableAutoFetch: false,
 } as const
 
+const IMAGE_SRC_RE = /\.(avif|webp|png|jpe?g|svg)$/i
+
+function isRasterCollateralSrc(src: string) {
+  return IMAGE_SRC_RE.test(src)
+}
+
 type PdfCollateralViewerProps = {
   pdfSrc: string
 }
@@ -26,6 +30,7 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
   const [pageWidth, setPageWidth] = useState(720)
   const [numPages, setNumPages] = useState<number | null>(null)
   const prefersReducedMotion = useReducedMotion()
+  const isImage = isRasterCollateralSrc(pdfSrc)
 
   useEffect(() => {
     setNumPages(null)
@@ -45,11 +50,34 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
     return () => ro.disconnect()
   }, [])
 
+  if (isImage) {
+    return (
+      <div ref={measureRef} className="w-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={pdfSrc}
+            className="w-full"
+            initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: prefersReducedMotion ? 1 : 0 }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : PDF_SWAP_FADE_SEC,
+              ease: 'easeInOut',
+            }}
+          >
+            <img
+              src={pdfSrc}
+              alt=""
+              className="mx-auto block h-auto w-full max-w-full"
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    )
+  }
+
   return (
-    <div
-      ref={measureRef}
-      className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 min-h-[55vh] md:min-h-[calc(100vh-14rem)]"
-    >
+    <div ref={measureRef} className="collateral-pdf w-full">
       <AnimatePresence mode="wait">
         <motion.div
           key={pdfSrc}
@@ -63,11 +91,11 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
           }}
         >
           <Document
-            className="w-full bg-[#04132a]"
+            className="w-full"
             file={pdfSrc}
             options={PDF_LOAD_OPTIONS}
             loading={
-              <div className="flex min-h-[50vh] w-full items-center justify-center bg-[#04132a]">
+              <div className="flex min-h-[50vh] w-full items-center justify-center">
                 <p className="text-white/70">Loading PDF…</p>
               </div>
             }
@@ -80,7 +108,7 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
                   key={i + 1}
                   pageNumber={i + 1}
                   width={pageWidth}
-                  canvasBackground={PDF_SURFACE_BG}
+                  canvasBackground={PDF_PAGE_BACKGROUND}
                   loading={
                     <div className="flex min-h-[40vh] w-full items-center justify-center">
                       <p className="text-white/70">Loading page…</p>
@@ -88,7 +116,7 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
                   }
                   renderTextLayer={false}
                   renderAnnotationLayer={false}
-                  className="mx-auto [&_.react-pdf__Page__canvas]:mx-auto [&_.react-pdf__Page__canvas]:block"
+                  className="mx-auto border-0 shadow-none outline-none [&_.react-pdf__Page__canvas]:mx-auto [&_.react-pdf__Page__canvas]:block"
                 />
               ))}
           </Document>

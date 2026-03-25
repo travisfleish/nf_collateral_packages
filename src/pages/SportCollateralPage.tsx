@@ -19,12 +19,12 @@ export function SportCollateralPage({ pageTitle, pdfSrc }: SportCollateralPagePr
   }, [pageTitle])
 
   return (
-    <main className="flex min-h-0 flex-1 flex-col bg-[#04132a]">
+    <main className="flex min-h-0 flex-1 flex-col bg-pdfSurface">
       <div className="flex min-h-0 w-full flex-1 flex-col px-4 pb-8 pt-0 md:px-6">
         <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 min-h-[55vh] md:min-h-[calc(100vh-14rem)]">
           <Suspense
             fallback={
-              <div className="flex min-h-[50vh] w-full items-center justify-center bg-[#04132a]">
+              <div className="flex min-h-[50vh] w-full items-center justify-center">
                 <p className="text-white/70">Loading viewer…</p>
               </div>
             }

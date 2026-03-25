@@ -9,13 +9,19 @@ export function AppRoutes() {
       <Route
         path="/world-cup"
         element={
-          <SportCollateralPage pageTitle="World Cup" pdfSrc="/pdfs/BarTableTopper_WorldCup_5x7.pdf" />
+          <SportCollateralPage
+            pageTitle="World Cup"
+            pdfSrc="/pdfs/World%20Cup.svg"
+          />
         }
       />
       <Route
         path="/football"
         element={
-          <SportCollateralPage pageTitle="Football" pdfSrc="/pdfs/BarTableTopper_Football_5x7.pdf" />
+          <SportCollateralPage
+            pageTitle="Football"
+            pdfSrc="/pdfs/Football.svg"
+          />
         }
       />
       <Route
@@ -23,14 +29,17 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Basketball"
-            pdfSrc="/pdfs/BarTableTopper_Basketball_5x7.pdf"
+            pdfSrc="/pdfs/basketball.svg"
           />
         }
       />
       <Route
         path="/soccer"
         element={
-          <SportCollateralPage pageTitle="Soccer" pdfSrc="/pdfs/BarTableTopper_Soccer_5x7.pdf" />
+          <SportCollateralPage
+            pageTitle="Soccer"
+            pdfSrc="/pdfs/Soccer.svg"
+          />
         }
       />
       <Route
@@ -38,7 +47,7 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Augmentation"
-            pdfSrc="/pdfs/BarTableTopper_Augmentation_5x7.pdf"
+            pdfSrc="/pdfs/Augmentation.svg"
           />
         }
       />

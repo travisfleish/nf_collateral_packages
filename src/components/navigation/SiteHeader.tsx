@@ -67,7 +67,7 @@ export function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className="fixed inset-x-0 top-0 z-50 bg-[#04132a] [backface-visibility:hidden]"
+      className="fixed inset-x-0 top-0 z-50 bg-pdfSurface [backface-visibility:hidden]"
       style={{
         transform: `translate3d(0, ${translateYPx}px, 0)`,
         pointerEvents: headerReveal < 0.02 ? 'none' : 'auto',
@@ -98,7 +98,7 @@ export function SiteHeader() {
             >
               <div className="relative cursor-pointer overflow-hidden rounded-pill bg-white/10">
                 <StripHoverBg />
-                <span className="relative z-20 block whitespace-nowrap rounded-pill px-4 py-2.5 text-center font-heading text-xs font-medium leading-none text-white transition-colors duration-300 ease-in-out group-hover:text-[#04132a] sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-3.5 lg:px-5 lg:py-[0.8rem] lg:text-[1rem]">
+                <span className="relative z-20 block whitespace-nowrap rounded-pill px-4 py-2.5 text-center font-heading text-xs font-medium leading-none text-white transition-colors duration-300 ease-in-out group-hover:text-pdfSurface sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-3.5 lg:px-5 lg:py-[0.8rem] lg:text-[1rem]">
                   Visit Genius Sports
                 </span>
               </div>

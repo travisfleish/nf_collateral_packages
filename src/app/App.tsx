@@ -6,7 +6,7 @@ import { AppRoutes } from './routes'
 
 export function App() {
   return (
-    <MarketingPageLayout className="flex min-h-screen flex-col !bg-[#04132a] text-white">
+    <MarketingPageLayout className="flex min-h-screen flex-col !bg-pdfSurface text-white">
       <SiteHeader />
       <div className={`flex min-h-0 flex-1 flex-col ${SITE_HEADER_MAIN_OFFSET_CLASS}`}>
         <CollateralHero />

@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import gsMarketingUiPreset from '@genius-sports/gs-marketing-ui/tailwind-preset'
+import { PDF_PAGE_BACKGROUND } from './src/theme/collateral'
 
 const config: Config = {
   presets: [gsMarketingUiPreset],
@@ -12,6 +13,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /** Page shell + PDF canvas — see `src/theme/collateral.ts` */
+        pdfSurface: PDF_PAGE_BACKGROUND,
         green: '#17b26a',
         /** Deep card purple (Learn mega-menu SAOT tile); matches geniussports.com tokens */
         purple: '#2d0a4a',

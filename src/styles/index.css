@@ -4,16 +4,32 @@
 @tailwind components;
 @tailwind utilities;
 
-/* App shell: match page navy so overscroll / rubber-band never flashes marketing-ui default white (--gs-bg). */
+/* App shell: match BarTableTopper SVG artboard (`#000c37`) so overscroll never flashes marketing-ui default white. */
 @layer base {
   html,
   body,
   #root {
-    background-color: #04132a;
+    background-color: theme('colors.pdfSurface');
   }
 }
 
 @layer components {
+  /**
+   * react-pdf Page: inline background + canvas. Remove extra chrome and kill the
+   * common “stray line” under canvases (inline layout gap / subpixel).
+   */
+  .collateral-pdf .react-pdf__Page {
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    line-height: 0 !important;
+  }
+
+  .collateral-pdf .react-pdf__Page__canvas {
+    vertical-align: top;
+    display: block;
+  }
+
   .hero-kicker {
     margin: 0;
     font-family: ESKlarheitKurrentTRIAL, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
