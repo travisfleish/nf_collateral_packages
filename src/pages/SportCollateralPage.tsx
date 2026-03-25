@@ -8,9 +8,11 @@ const PdfCollateralViewer = lazy(() =>
 export type SportCollateralPageProps = {
   pageTitle: string
   pdfSrc: string
+  /** Stack two-column raster/SVG collateral vertically (all breakpoints) */
+  stackMobile?: boolean
 }
 
-export function SportCollateralPage({ pageTitle, pdfSrc }: SportCollateralPageProps) {
+export function SportCollateralPage({ pageTitle, pdfSrc, stackMobile }: SportCollateralPageProps) {
   useEffect(() => {
     setPageMeta({
       title: `${pageTitle} · Genius Sports NewFront`,
@@ -29,7 +31,7 @@ export function SportCollateralPage({ pageTitle, pdfSrc }: SportCollateralPagePr
               </div>
             }
           >
-            <PdfCollateralViewer pdfSrc={pdfSrc} />
+            <PdfCollateralViewer pdfSrc={pdfSrc} stackMobile={stackMobile} />
           </Suspense>
         </div>
       </div>

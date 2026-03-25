@@ -23,9 +23,11 @@ function isRasterCollateralSrc(src: string) {
 
 type PdfCollateralViewerProps = {
   pdfSrc: string
+  /** When true, two-column raster/SVG collateral is shown as vertically stacked panels at all breakpoints. */
+  stackMobile?: boolean
 }
 
-export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
+export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewerProps) {
   const measureRef = useRef<HTMLDivElement>(null)
   const [pageWidth, setPageWidth] = useState(720)
   const [numPages, setNumPages] = useState<number | null>(null)
@@ -51,6 +53,14 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
   }, [])
 
   if (isImage) {
+    const singleImage = (
+      <img
+        src={pdfSrc}
+        alt=""
+        className="mx-auto block h-auto w-full max-w-full"
+      />
+    )
+
     return (
       <div ref={measureRef} className="w-full">
         <AnimatePresence mode="wait">
@@ -65,11 +75,38 @@ export function PdfCollateralViewer({ pdfSrc }: PdfCollateralViewerProps) {
               ease: 'easeInOut',
             }}
           >
-            <img
-              src={pdfSrc}
-              alt=""
-              className="mx-auto block h-auto w-full max-w-full"
-            />
+            {stackMobile ? (
+              <div className="flex flex-col">
+                {/* Two-column art (viewBox 740×504): left 360 + right 360 */}
+                <div
+                  className="w-full overflow-hidden"
+                  style={{ aspectRatio: '360 / 504' }}
+                >
+                  <img
+                    src={pdfSrc}
+                    alt=""
+                    className="block h-auto max-w-none"
+                    style={{ width: 'calc(100% * 740 / 360)' }}
+                  />
+                </div>
+                <div
+                  className="w-full overflow-hidden"
+                  style={{ aspectRatio: '360 / 504' }}
+                >
+                  <img
+                    src={pdfSrc}
+                    alt=""
+                    className="block h-auto max-w-none"
+                    style={{
+                      width: 'calc(100% * 740 / 360)',
+                      marginLeft: 'calc(-100% * 380 / 360)',
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              singleImage
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
