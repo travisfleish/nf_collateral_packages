@@ -5,11 +5,11 @@ import geniusLogoUrl from '@genius-sports/gs-marketing-ui/assets/logos/genius_lo
 /** Scroll distance (px) over which the header slides away (opaque navy — no element opacity, so white content never bleeds through). */
 const HEADER_HIDE_SCROLL_RANGE = 200
 
-/** Clears the fixed header (logo `h-24` + bar padding). */
-export const SITE_HEADER_MAIN_OFFSET_CLASS = 'pt-24'
+/** Clears the fixed header (logo `h-16` mobile / `h-24` md+ + bar padding). */
+export const SITE_HEADER_MAIN_OFFSET_CLASS = 'pt-20 md:pt-24'
 
-/** Logo row is `h-24` (96px); used until layout measures the real header height. */
-const FALLBACK_HEADER_HEIGHT_PX = 96
+/** Approximate header height before ResizeObserver runs (mobile-first). */
+const FALLBACK_HEADER_HEIGHT_PX = 80
 
 export function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null)
@@ -86,7 +86,7 @@ export function SiteHeader() {
               <img
                 src={geniusLogoUrl}
                 alt="Genius Sports"
-                className="h-24 w-auto object-contain object-left brightness-0 invert"
+                className="h-16 w-auto object-contain object-left brightness-0 invert md:h-24"
               />
             </a>
 
