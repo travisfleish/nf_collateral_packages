@@ -18,7 +18,6 @@ const footerColumnHeaderTypography = {
   fontSize: '14px',
   lineHeight: '18.2px',
   letterSpacing: '-0.13125px',
-  color: 'rgba(13, 18, 38, 0.7)',
   margin: '0 0 40px',
   fontSynthesis: 'none',
 } as const
@@ -29,7 +28,6 @@ const footerPolicyLinkTypography = {
   fontSize: '13.6772px',
   lineHeight: '19.832px',
   letterSpacing: '-0.128224px',
-  color: 'rgba(13, 18, 42, 0.706)',
   fontFeatureSettings: 'normal',
   fontVariationSettings: 'normal',
   textDecoration: 'none',
@@ -51,12 +49,12 @@ export function SiteFooter() {
   const { footer } = siteContent
 
   return (
-    <footer className="mt-auto py-12 md:py-16">
+    <footer className="mt-auto py-12 text-white md:py-16">
       <SectionShell width="wide" className="flex flex-col gap-10 md:gap-12">
         <div className="grid gap-y-10 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-5 lg:gap-x-14">
           {footer.columns.map((col) => (
-            <div key={col.title}>
-              <h3 className="block" style={footerColumnHeaderTypography}>
+            <div key={col.title} className="hidden md:block">
+              <h3 className="block text-white/70" style={footerColumnHeaderTypography}>
                 {col.title}
               </h3>
               <ul className="space-y-5">
@@ -66,7 +64,7 @@ export function SiteFooter() {
                       href={link.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-navy transition-colors duration-300 ease-in-out hover:text-blue"
+                      className="text-white/90 transition-colors duration-300 ease-in-out hover:text-white"
                       style={footerLinkTypography}
                     >
                       {link.label}
@@ -76,8 +74,8 @@ export function SiteFooter() {
               </ul>
             </div>
           ))}
-          <div className="sm:col-span-2 lg:col-span-1 lg:justify-self-end">
-            <ul className="flex items-center gap-3 text-foreground/70 lg:justify-end">
+          <div className="flex justify-center sm:col-span-2 sm:justify-start lg:col-span-1 lg:justify-self-end">
+            <ul className="flex items-center gap-3 text-white/80 sm:justify-start lg:justify-end">
               {footer.social.map((social) => (
                 <li key={social.label}>
                   <a
@@ -85,7 +83,7 @@ export function SiteFooter() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.label}
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[#f3f5f8] text-[#0d1226] transition-colors duration-300 ease-in-out hover:bg-[#0d1226] hover:text-white"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-sm bg-white/10 text-white transition-colors duration-300 ease-in-out hover:bg-white hover:text-[#060a37]"
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
                       <path d={socialIconPaths[social.label]} />
@@ -96,18 +94,18 @@ export function SiteFooter() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
-          <Text variant="bodySm" className="text-sm text-muted">
+        <div className="flex flex-col items-center gap-4 border-t border-white/15 pt-8 text-center md:flex-row md:flex-wrap md:items-center md:justify-between md:text-left">
+          <Text variant="bodySm" className="text-sm text-white/55">
             {footer.copyright}
           </Text>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-white/55 md:justify-start">
             {footer.policyLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className="transition-colors duration-300 ease-in-out hover:text-blue"
+                className="text-white/55 transition-colors duration-300 ease-in-out hover:text-white"
                 style={footerPolicyLinkTypography}
               >
                 {link.label}

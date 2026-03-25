@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* App shell: match page navy so overscroll / rubber-band never flashes marketing-ui default white (--gs-bg). */
+@layer base {
+  html,
+  body,
+  #root {
+    background-color: #060a37;
+  }
+}
+
 @layer components {
   .hero-kicker {
     margin: 0;

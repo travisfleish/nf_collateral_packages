@@ -46,8 +46,8 @@ export function SportCollateralPage(props: SportCollateralPageProps) {
   }, [isPdf])
 
   return (
-    <main className="flex min-h-0 flex-1 flex-col bg-white">
-      <div className="flex min-h-0 w-full flex-1 flex-col px-4 pb-8 pt-2 md:px-6 md:pt-4">
+    <main className="flex min-h-0 flex-1 flex-col bg-[#060a37]">
+      <div className="flex min-h-0 w-full flex-1 flex-col px-4 pb-8 pt-0 md:px-6">
         <div
           ref={measureRef}
           className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 min-h-[55vh] md:min-h-[calc(100vh-14rem)]"
@@ -56,8 +56,8 @@ export function SportCollateralPage(props: SportCollateralPageProps) {
             <Document
               key={pdfSrc}
               file={pdfSrc}
-              loading={<p className="text-neutral-500">Loading PDF…</p>}
-              error={<p className="text-neutral-600">Failed to load PDF.</p>}
+              loading={<p className="text-white/70">Loading PDF…</p>}
+              error={<p className="text-white/90">Failed to load PDF.</p>}
               onLoadSuccess={({ numPages: n }) => setNumPages(n)}
             >
               {numPages !== null &&
