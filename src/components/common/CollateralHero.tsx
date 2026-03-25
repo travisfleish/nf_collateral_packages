@@ -11,7 +11,7 @@ export function CollateralHero() {
       aria-labelledby="newfronts-hero-title"
       className="w-full shrink-0 bg-[#060a37] text-white"
     >
-      <div className="container mx-auto flex flex-col items-center px-4 pb-8 pt-20 md:px-6 md:pb-10 md:pt-24 lg:pb-12 lg:pt-28">
+      <div className="container mx-auto flex flex-col items-center px-4 pb-8 pt-12 md:px-6 md:pb-10 md:pt-24 lg:pb-12 lg:pt-28">
         <Heading
           id="newfronts-hero-title"
           level="h1"
