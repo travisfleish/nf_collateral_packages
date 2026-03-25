@@ -51,7 +51,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto py-12 text-white md:py-16">
       <SectionShell width="wide" className="flex flex-col gap-10 md:gap-12">
-        <div className="grid gap-y-10 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-5 lg:gap-x-14">
+        <div className="grid items-start gap-y-10 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-5 lg:gap-x-14">
           {footer.columns.map((col) => (
             <div key={col.title} className="hidden md:block">
               <h3 className="block text-white/70" style={footerColumnHeaderTypography}>
@@ -74,7 +74,7 @@ export function SiteFooter() {
               </ul>
             </div>
           ))}
-          <div className="flex justify-center sm:col-span-2 sm:justify-start lg:col-span-1 lg:justify-self-end">
+          <div className="flex self-start justify-center sm:col-span-2 sm:justify-start lg:col-span-1 lg:justify-self-end">
             <ul className="flex items-center gap-3 text-white/80 sm:justify-start lg:justify-end">
               {footer.social.map((social) => (
                 <li key={social.label}>

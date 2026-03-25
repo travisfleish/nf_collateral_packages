@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { StripHoverBg } from '../common/StripHoverBg'
 import geniusLogoUrl from '@genius-sports/gs-marketing-ui/assets/logos/genius_logo.svg?url'
 
@@ -8,13 +8,43 @@ const HEADER_HIDE_SCROLL_RANGE = 200
 /** Clears the fixed header (logo `h-24` + bar padding). */
 export const SITE_HEADER_MAIN_OFFSET_CLASS = 'pt-24'
 
+/** Logo row is `h-24` (96px); used until layout measures the real header height. */
+const FALLBACK_HEADER_HEIGHT_PX = 96
+
 export function SiteHeader() {
+  const headerRef = useRef<HTMLElement>(null)
   const [scrollY, setScrollY] = useState(0)
+  const [headerHeightPx, setHeaderHeightPx] = useState(FALLBACK_HEADER_HEIGHT_PX)
 
   /** 1 = fully visible, 0 = hidden (slid up). */
   const headerReveal = useMemo(() => {
     return Math.min(1, Math.max(0, 1 - scrollY / HEADER_HIDE_SCROLL_RANGE))
   }, [scrollY])
+
+  /** Percent-based translate causes subpixel gaps (brief hairline) at the header bottom; px + round fixes it. */
+  const translateYPx = useMemo(() => {
+    const h = headerHeightPx > 0 ? headerHeightPx : FALLBACK_HEADER_HEIGHT_PX
+    return Math.round((headerReveal - 1) * h)
+  }, [headerReveal, headerHeightPx])
+
+  useLayoutEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+
+    const syncHeight = () => {
+      const raw = el.offsetHeight || Math.round(el.getBoundingClientRect().height)
+      if (raw > 0) setHeaderHeightPx(raw)
+    }
+    syncHeight()
+    const rafId = requestAnimationFrame(syncHeight)
+
+    const ro = new ResizeObserver(syncHeight)
+    ro.observe(el)
+    return () => {
+      cancelAnimationFrame(rafId)
+      ro.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     let raf = 0
@@ -36,9 +66,10 @@ export function SiteHeader() {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 bg-[#060a37]"
+      ref={headerRef}
+      className="fixed inset-x-0 top-0 z-50 bg-[#060a37] [backface-visibility:hidden]"
       style={{
-        transform: `translateY(${(1 - headerReveal) * -100}%)`,
+        transform: `translate3d(0, ${translateYPx}px, 0)`,
         pointerEvents: headerReveal < 0.02 ? 'none' : 'auto',
       }}
     >
