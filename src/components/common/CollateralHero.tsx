@@ -19,9 +19,22 @@ export function CollateralHero() {
         >
           Genius Sports NewFront
         </Heading>
+        <a
+          href={siteContent.momentsCta.href}
+          target="_blank"
+          rel="noreferrer"
+          className="group mt-10 inline-flex max-w-full shrink-0 items-center justify-center sm:mt-12 md:mt-14"
+        >
+          <div className="relative cursor-pointer overflow-hidden rounded-pill bg-white/20 ring-1 ring-white/40">
+            <StripHoverBg />
+            <span className="relative z-20 block rounded-pill px-5 py-3 text-center font-heading text-sm font-semibold leading-none text-white transition-colors duration-300 ease-in-out group-hover:text-pdfSurface sm:px-8 sm:py-3.5 sm:text-base md:px-10 md:py-4 md:text-lg lg:px-12 lg:py-[1rem]">
+              {siteContent.momentsCta.label}
+            </span>
+          </div>
+        </a>
         <nav
           aria-label="Sport collateral"
-          className="mt-10 mx-auto grid w-full max-w-md grid-cols-2 justify-items-center gap-3 sm:mt-12 sm:gap-4 md:mt-14 md:flex md:max-w-full md:flex-wrap md:justify-center md:gap-5"
+          className="mt-8 mx-auto grid w-full max-w-md grid-cols-2 justify-items-center gap-3 sm:mt-10 sm:gap-4 md:mt-12 md:flex md:max-w-full md:flex-wrap md:justify-center md:gap-5"
         >
           {items.map((item, index) => {
             const isLast = index === items.length - 1

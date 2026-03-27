@@ -144,6 +144,11 @@ export const siteContent = {
     { label: 'Soccer', href: '/soccer', activePathnames: ['/soccer'] },
     { label: 'Augmentation', href: '/augmentation', activePathnames: ['/augmentation'] },
   ] satisfies CollateralNavItem[],
+  /** External link — hero band between title and sport collateral nav. */
+  momentsCta: {
+    label: 'Moments Overview',
+    href: 'https://moments.geniussportsaudiences.com',
+  },
   footer: {
     columns: [
       {
