@@ -21,9 +21,9 @@ export function SportCollateralPage({ pageTitle, pdfSrc, stackMobile }: SportCol
   }, [pageTitle])
 
   return (
-    <main className="flex min-h-0 flex-1 flex-col bg-pdfSurface">
-      <div className="flex min-h-0 w-full flex-1 flex-col px-4 pb-8 pt-0 md:px-6">
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 min-h-[55vh] md:min-h-[calc(100vh-14rem)]">
+    <main className="flex min-h-0 flex-col bg-pdfSurface">
+      <div className="flex min-h-0 w-full flex-col px-4 pb-10 pt-0 md:px-6 md:pb-12">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6">
           <Suspense
             fallback={
               <div className="flex min-h-[50vh] w-full items-center justify-center">

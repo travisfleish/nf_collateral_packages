@@ -47,7 +47,7 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Augmentation"
-            pdfSrc="/pdfs/Augmentation.svg"
+            pdfSrc="/pdfs/Augmentation%202.svg"
             stackMobile
           />
         }

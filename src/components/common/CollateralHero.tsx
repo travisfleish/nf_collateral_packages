@@ -11,13 +11,13 @@ export function CollateralHero() {
       aria-labelledby="newfronts-hero-title"
       className="w-full shrink-0 bg-pdfSurface text-white"
     >
-      <div className="container mx-auto flex flex-col items-center px-4 pb-8 pt-12 md:px-6 md:pb-10 md:pt-24 lg:pb-12 lg:pt-28">
+      <div className="container mx-auto flex flex-col items-center px-4 pb-10 pt-12 md:px-6 md:pb-12 md:pt-24 lg:pb-16 lg:pt-28">
         <Heading
           id="newfronts-hero-title"
           level="h1"
-          className="w-full min-w-0 max-w-4xl text-balance text-center !text-white max-md:!text-[clamp(1.625rem,3.25vw+0.875rem,4.5rem)] max-md:!leading-[1.1] max-md:!tracking-[-0.02em] md:!text-brand-h1"
+          className="w-full min-w-0 max-w-7xl text-center !text-white !text-[clamp(1.5rem,3vw+0.75rem,4rem)] !leading-[1.1] !tracking-[-0.02em]"
         >
-          Genius Sports NewFront
+          Genius Sports NewFront 2026
         </Heading>
         <a
           href={siteContent.momentsCta.href}

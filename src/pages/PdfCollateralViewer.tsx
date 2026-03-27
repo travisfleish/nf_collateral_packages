@@ -23,7 +23,7 @@ function isRasterCollateralSrc(src: string) {
 
 type PdfCollateralViewerProps = {
   pdfSrc: string
-  /** When true, two-column raster/SVG collateral is shown as vertically stacked panels at all breakpoints. */
+  /** When true, two-column art stacks on small viewports; full side-by-side layout from `lg` up. */
   stackMobile?: boolean
 }
 
@@ -76,34 +76,37 @@ export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewer
             }}
           >
             {stackMobile ? (
-              <div className="flex flex-col">
-                {/* Two-column art (viewBox 740×504): left 360 + right 360 */}
-                <div
-                  className="w-full overflow-hidden"
-                  style={{ aspectRatio: '360 / 504' }}
-                >
-                  <img
-                    src={pdfSrc}
-                    alt=""
-                    className="block h-auto max-w-none"
-                    style={{ width: 'calc(100% * 740 / 360)' }}
-                  />
+              <>
+                <div className="hidden w-full lg:block">{singleImage}</div>
+                <div className="mx-auto flex w-full max-w-2xl flex-col lg:hidden">
+                  {/* Two-column art (viewBox 740×504): left 360 + right 360 */}
+                  <div
+                    className="w-full overflow-hidden"
+                    style={{ aspectRatio: '360 / 504' }}
+                  >
+                    <img
+                      src={pdfSrc}
+                      alt=""
+                      className="block h-auto max-w-none"
+                      style={{ width: 'calc(100% * 740 / 360)' }}
+                    />
+                  </div>
+                  <div
+                    className="w-full overflow-hidden"
+                    style={{ aspectRatio: '360 / 504' }}
+                  >
+                    <img
+                      src={pdfSrc}
+                      alt=""
+                      className="block h-auto max-w-none"
+                      style={{
+                        width: 'calc(100% * 740 / 360)',
+                        marginLeft: 'calc(-100% * 380 / 360)',
+                      }}
+                    />
+                  </div>
                 </div>
-                <div
-                  className="w-full overflow-hidden"
-                  style={{ aspectRatio: '360 / 504' }}
-                >
-                  <img
-                    src={pdfSrc}
-                    alt=""
-                    className="block h-auto max-w-none"
-                    style={{
-                      width: 'calc(100% * 740 / 360)',
-                      marginLeft: 'calc(-100% * 380 / 360)',
-                    }}
-                  />
-                </div>
-              </div>
+              </>
             ) : (
               singleImage
             )}
