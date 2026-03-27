@@ -11,7 +11,7 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="World Cup"
-            pdfSrc="/pdfs/World%20Cup.svg"
+            pdfSrc="/pdfs/Asset%202.svg"
           />
         }
       />
