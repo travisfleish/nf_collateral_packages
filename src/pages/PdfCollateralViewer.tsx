@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { type CSSProperties, useEffect, useRef, useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import { PDF_PAGE_BACKGROUND } from '../theme/collateral'
@@ -16,9 +16,75 @@ const PDF_LOAD_OPTIONS = {
 } as const
 
 const IMAGE_SRC_RE = /\.(avif|webp|png|jpe?g|svg)$/i
+const SVG_SRC_RE = /\.svg(?:$|\?)/i
 
 function isRasterCollateralSrc(src: string) {
   return IMAGE_SRC_RE.test(src)
+}
+
+function isSvgCollateralSrc(src: string) {
+  return SVG_SRC_RE.test(src)
+}
+
+type CollateralImageProps = {
+  src: string
+  alt: string
+  className?: string
+  style?: CSSProperties
+}
+
+function CollateralImage({ src, alt, className, style }: CollateralImageProps) {
+  const [svgMarkup, setSvgMarkup] = useState<string | null>(null)
+  const [svgLoadError, setSvgLoadError] = useState(false)
+  const isSvg = isSvgCollateralSrc(src)
+
+  useEffect(() => {
+    if (!isSvg) {
+      setSvgMarkup(null)
+      return
+    }
+
+    const controller = new AbortController()
+    const loadSvg = async () => {
+      try {
+        setSvgLoadError(false)
+        const response = await fetch(src, { signal: controller.signal })
+        if (!response.ok) {
+          throw new Error(`Failed to load SVG: ${response.status}`)
+        }
+        const raw = await response.text()
+        setSvgMarkup(raw)
+      } catch {
+        setSvgMarkup(null)
+        setSvgLoadError(true)
+      }
+    }
+
+    void loadSvg()
+    return () => controller.abort()
+  }, [isSvg, src])
+
+  if (!isSvg) {
+    return <img src={src} alt={alt} className={className} style={style} />
+  }
+
+  if (svgMarkup === null && svgLoadError) {
+    return <img src={src} alt={alt} className={className} style={style} />
+  }
+
+  if (svgMarkup === null) {
+    return <div className={className} style={style} aria-hidden={alt === '' ? true : undefined} />
+  }
+
+  return (
+    <div
+      className={`${className ?? ''} [&>svg]:block [&>svg]:h-auto [&>svg]:w-full`}
+      style={style}
+      aria-hidden={alt === '' ? true : undefined}
+      role={alt === '' ? undefined : 'img'}
+      dangerouslySetInnerHTML={{ __html: svgMarkup }}
+    />
+  )
 }
 
 type PdfCollateralViewerProps = {
@@ -116,7 +182,7 @@ export function PdfCollateralViewer({
                           : undefined
                       }
                     >
-                    <img
+                    <CollateralImage
                       src={src}
                       alt=""
                       className="mx-auto block h-auto max-w-full"
@@ -146,7 +212,7 @@ export function PdfCollateralViewer({
     const singleImage =
       cropTop > 0 || cropBottom > 0 ? (
         <div className="mx-auto w-full max-w-full overflow-hidden">
-          <img
+          <CollateralImage
             src={singleSrc}
             alt=""
             className="mx-auto block h-auto max-w-full"
@@ -159,7 +225,7 @@ export function PdfCollateralViewer({
           />
         </div>
       ) : (
-        <img
+        <CollateralImage
           src={singleSrc}
           alt=""
           className="mx-auto block h-auto max-w-full"
@@ -190,7 +256,7 @@ export function PdfCollateralViewer({
                     className="w-full overflow-hidden"
                     style={{ aspectRatio: '360 / 504' }}
                   >
-                    <img
+                    <CollateralImage
                       src={singleSrc}
                       alt=""
                       className="block h-auto max-w-none"
@@ -201,7 +267,7 @@ export function PdfCollateralViewer({
                     className="w-full overflow-hidden"
                     style={{ aspectRatio: '360 / 504' }}
                   >
-                    <img
+                    <CollateralImage
                       src={singleSrc}
                       alt=""
                       className="block h-auto max-w-none"
