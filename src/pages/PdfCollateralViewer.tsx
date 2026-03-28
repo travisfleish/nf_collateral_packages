@@ -22,21 +22,53 @@ function isRasterCollateralSrc(src: string) {
 }
 
 type PdfCollateralViewerProps = {
-  pdfSrc: string
+  pdfSrc: string | string[]
   /** When true, two-column art stacks on small viewports; full side-by-side layout from `lg` up. */
   stackMobile?: boolean
+  /** Shifts raster/SVG upward by percent (render-time clip, no scaling). Can be per-image for arrays. */
+  imageTopCropPercent?: number | number[]
+  /** Crops raster/SVG from bottom by percent. Can be per-image for arrays. */
+  imageBottomCropPercent?: number | number[]
+  /** Scales image display width by percent (100 = full width). Can be per-image for arrays. */
+  imageWidthPercent?: number | number[]
 }
 
-export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewerProps) {
+export function PdfCollateralViewer({
+  pdfSrc,
+  stackMobile,
+  imageTopCropPercent = 0,
+  imageBottomCropPercent = 0,
+  imageWidthPercent = 100,
+}: PdfCollateralViewerProps) {
   const measureRef = useRef<HTMLDivElement>(null)
   const [pageWidth, setPageWidth] = useState(720)
   const [numPages, setNumPages] = useState<number | null>(null)
   const prefersReducedMotion = useReducedMotion()
-  const isImage = isRasterCollateralSrc(pdfSrc)
+  const sources = Array.isArray(pdfSrc) ? pdfSrc : [pdfSrc]
+  const sourceKey = sources.join('|')
+  const isImage = sources.every(isRasterCollateralSrc)
+  const getCropTop = (index: number) => {
+    if (Array.isArray(imageTopCropPercent)) {
+      return Math.max(0, imageTopCropPercent[index] ?? 0)
+    }
+    return Math.max(0, imageTopCropPercent)
+  }
+  const getCropBottom = (index: number) => {
+    if (Array.isArray(imageBottomCropPercent)) {
+      return Math.max(0, imageBottomCropPercent[index] ?? 0)
+    }
+    return Math.max(0, imageBottomCropPercent)
+  }
+  const getImageWidth = (index: number) => {
+    if (Array.isArray(imageWidthPercent)) {
+      return Math.min(100, Math.max(1, imageWidthPercent[index] ?? 100))
+    }
+    return Math.min(100, Math.max(1, imageWidthPercent))
+  }
 
   useEffect(() => {
     setNumPages(null)
-  }, [pdfSrc])
+  }, [sourceKey])
 
   useEffect(() => {
     const el = measureRef.current
@@ -53,19 +85,93 @@ export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewer
   }, [])
 
   if (isImage) {
-    const singleImage = (
-      <img
-        src={pdfSrc}
-        alt=""
-        className="mx-auto block h-auto w-full max-w-full"
-      />
-    )
+    if (sources.length > 1) {
+      return (
+        <div ref={measureRef} className="w-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={sourceKey}
+              className="w-full"
+              initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: prefersReducedMotion ? 1 : 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : PDF_SWAP_FADE_SEC,
+                ease: 'easeInOut',
+              }}
+            >
+              <div className="mx-auto flex w-full max-w-full flex-col">
+                {sources.map((src, index) => {
+                  const perImageCropTop = getCropTop(index)
+                  const perImageCropBottom = getCropBottom(index)
+                  const isLast = index === sources.length - 1
+                  const totalCrop = perImageCropTop + perImageCropBottom
+                  return (
+                    <div
+                      key={src}
+                      className="mx-auto w-full max-w-full overflow-hidden"
+                      style={
+                        !isLast && totalCrop > 0
+                          ? { marginBottom: `-${totalCrop * (504 / 360)}%` }
+                          : undefined
+                      }
+                    >
+                    <img
+                      src={src}
+                      alt=""
+                      className="mx-auto block h-auto max-w-full"
+                      style={
+                        totalCrop > 0
+                          ? {
+                              width: `${getImageWidth(index)}%`,
+                              transform: perImageCropTop > 0 ? `translateY(-${perImageCropTop}%)` : undefined,
+                              clipPath: `inset(0 0 ${perImageCropBottom}% 0)`,
+                            }
+                          : { width: `${getImageWidth(index)}%` }
+                      }
+                    />
+                  </div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      )
+    }
+
+    const singleSrc = sources[0]
+    const cropTop = getCropTop(0)
+    const cropBottom = getCropBottom(0)
+    const singleImage =
+      cropTop > 0 || cropBottom > 0 ? (
+        <div className="mx-auto w-full max-w-full overflow-hidden">
+          <img
+            src={singleSrc}
+            alt=""
+            className="mx-auto block h-auto max-w-full"
+            style={{
+              width: `${getImageWidth(0)}%`,
+              transform: cropTop > 0 ? `translateY(-${cropTop}%)` : undefined,
+              transformOrigin: 'top center',
+              clipPath: `inset(0 0 ${cropBottom}% 0)`,
+            }}
+          />
+        </div>
+      ) : (
+        <img
+          src={singleSrc}
+          alt=""
+          className="mx-auto block h-auto max-w-full"
+          style={{ width: `${getImageWidth(0)}%` }}
+        />
+      )
 
     return (
       <div ref={measureRef} className="w-full">
         <AnimatePresence mode="wait">
           <motion.div
-            key={pdfSrc}
+            key={sourceKey}
             className="w-full"
             initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
             animate={{ opacity: 1 }}
@@ -85,7 +191,7 @@ export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewer
                     style={{ aspectRatio: '360 / 504' }}
                   >
                     <img
-                      src={pdfSrc}
+                      src={singleSrc}
                       alt=""
                       className="block h-auto max-w-none"
                       style={{ width: 'calc(100% * 740 / 360)' }}
@@ -96,7 +202,7 @@ export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewer
                     style={{ aspectRatio: '360 / 504' }}
                   >
                     <img
-                      src={pdfSrc}
+                      src={singleSrc}
                       alt=""
                       className="block h-auto max-w-none"
                       style={{
@@ -120,7 +226,7 @@ export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewer
     <div ref={measureRef} className="collateral-pdf w-full">
       <AnimatePresence mode="wait">
         <motion.div
-          key={pdfSrc}
+          key={sourceKey}
           className="w-full"
           initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
           animate={{ opacity: 1 }}
@@ -132,7 +238,7 @@ export function PdfCollateralViewer({ pdfSrc, stackMobile }: PdfCollateralViewer
         >
           <Document
             className="w-full"
-            file={pdfSrc}
+            file={sources[0]}
             options={PDF_LOAD_OPTIONS}
             loading={
               <div className="flex min-h-[50vh] w-full items-center justify-center">

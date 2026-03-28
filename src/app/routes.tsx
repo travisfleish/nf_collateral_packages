@@ -11,7 +11,8 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="World Cup"
-            pdfSrc="/pdfs/Asset%202.svg"
+            pdfSrc="/images_new/world_cup_new.svg"
+            imageTopCropPercent={11}
           />
         }
       />
@@ -20,7 +21,7 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Football"
-            pdfSrc="/pdfs/Football.svg"
+            pdfSrc="/images/Football.svg"
           />
         }
       />
@@ -29,7 +30,8 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Basketball"
-            pdfSrc="/pdfs/basketball.svg"
+            pdfSrc="/images_new/basketball_new.svg"
+            imageTopCropPercent={11}
           />
         }
       />
@@ -38,7 +40,8 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Soccer"
-            pdfSrc="/pdfs/Soccer.svg"
+            pdfSrc="/images_new/soccer_new.svg"
+            imageTopCropPercent={11}
           />
         }
       />
@@ -47,8 +50,12 @@ export function AppRoutes() {
         element={
           <SportCollateralPage
             pageTitle="Augmentation"
-            pdfSrc="/pdfs/Augmentation%202.svg"
-            stackMobile
+            collateralHeader="Augmentation"
+            collateralHeaderStyle="treatment"
+            pdfSrc={['/images_new/augmentation_1_new.svg', '/images_new/augmentation_2_new.svg']}
+            imageTopCropPercent={[33, 16]}
+            imageBottomCropPercent={[10, 0]}
+            imageWidthPercent={[94, 94]}
           />
         }
       />
