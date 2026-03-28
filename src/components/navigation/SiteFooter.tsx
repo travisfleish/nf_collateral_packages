@@ -47,6 +47,11 @@ const socialIconPaths: Record<string, string> = {
 
 export function SiteFooter() {
   const { footer } = siteContent
+  const mobileCopyrightBreak = ' All rights reserved.'
+  const hasMobileCopyrightBreak = footer.copyright.includes(mobileCopyrightBreak)
+  const [mobileCopyrightStart] = hasMobileCopyrightBreak
+    ? footer.copyright.split(mobileCopyrightBreak)
+    : [footer.copyright]
 
   return (
     <footer className="py-12 text-white md:py-16">
@@ -96,7 +101,16 @@ export function SiteFooter() {
         </div>
         <div className="flex flex-col items-center gap-4 border-t border-white/15 pt-8 text-center md:flex-row md:flex-wrap md:items-center md:justify-between md:text-left">
           <Text variant="bodySm" className="text-sm text-white/55">
-            {footer.copyright}
+            <span className="hidden md:inline">{footer.copyright}</span>
+            <span className="md:hidden">
+              {mobileCopyrightStart}
+              {hasMobileCopyrightBreak ? (
+                <>
+                  <br />
+                  All rights reserved.
+                </>
+              ) : null}
+            </span>
           </Text>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-white/55 md:justify-start">
             {footer.policyLinks.map((link) => (
