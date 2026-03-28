@@ -1,11 +1,20 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { SportCollateralPage } from '../pages/SportCollateralPage'
 
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/world-cup" replace />} />
+      <Route
+        path="/"
+        element={
+          <SportCollateralPage
+            pageTitle="World Cup"
+            pdfSrc="/images_new/world_cup_new.svg"
+            imageTopCropPercent={11}
+          />
+        }
+      />
       <Route
         path="/world-cup"
         element={
