@@ -26,6 +26,14 @@ function isSvgCollateralSrc(src: string) {
   return SVG_SRC_RE.test(src)
 }
 
+function normalizeSvgFontFamilies(svg: string) {
+  return svg
+    .replace(/KlarheitKurrent-Bold,\s*'Klarheit Kurrent'/g, 'ESKlarheitKurrentTRIAL, "Klarheit Kurrent"')
+    .replace(/KlarheitKurrent-Regular,\s*'Klarheit Kurrent'/g, 'ESKlarheitKurrentTRIAL, "Klarheit Kurrent"')
+    .replace(/KlarheitKurrent-Bold/g, 'ESKlarheitKurrentTRIAL')
+    .replace(/KlarheitKurrent-Regular/g, 'ESKlarheitKurrentTRIAL')
+}
+
 type CollateralImageProps = {
   src: string
   alt: string
@@ -53,7 +61,7 @@ function CollateralImage({ src, alt, className, style }: CollateralImageProps) {
           throw new Error(`Failed to load SVG: ${response.status}`)
         }
         const raw = await response.text()
-        setSvgMarkup(raw)
+        setSvgMarkup(normalizeSvgFontFamilies(raw))
       } catch {
         setSvgMarkup(null)
         setSvgLoadError(true)
