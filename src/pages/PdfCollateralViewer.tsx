@@ -17,6 +17,7 @@ const PDF_LOAD_OPTIONS = {
 
 const IMAGE_SRC_RE = /\.(avif|webp|png|jpe?g|svg)$/i
 const SVG_SRC_RE = /\.svg(?:$|\?)/i
+const COLLATERAL_ART_ASPECT_RATIO = 504 / 740
 
 function isRasterCollateralSrc(src: string) {
   return IMAGE_SRC_RE.test(src)
@@ -217,9 +218,13 @@ export function PdfCollateralViewer({
     const singleSrc = sources[0]
     const cropTop = getCropTop(0)
     const cropBottom = getCropBottom(0)
+    const cropTopSpaceCompensation = cropTop > 0 ? cropTop * COLLATERAL_ART_ASPECT_RATIO : 0
     const singleImage =
       cropTop > 0 || cropBottom > 0 ? (
-        <div className="mx-auto w-full max-w-full overflow-hidden">
+        <div
+          className="mx-auto w-full max-w-full overflow-hidden"
+          style={cropTopSpaceCompensation > 0 ? { marginBottom: `-${cropTopSpaceCompensation}%` } : undefined}
+        >
           <CollateralImage
             src={singleSrc}
             alt=""

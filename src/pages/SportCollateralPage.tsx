@@ -109,13 +109,15 @@ export function SportCollateralPage({
               </div>
             }
           >
-            <PdfCollateralViewer
-              pdfSrc={pdfSrc}
-              stackMobile={stackMobile}
-              imageTopCropPercent={imageTopCropPercent}
-              imageBottomCropPercent={imageBottomCropPercent}
-              imageWidthPercent={imageWidthPercent}
-            />
+            <div className="-mx-4 w-[calc(100%+2rem)] md:mx-0 md:w-full">
+              <PdfCollateralViewer
+                pdfSrc={pdfSrc}
+                stackMobile={stackMobile}
+                imageTopCropPercent={imageTopCropPercent}
+                imageBottomCropPercent={imageBottomCropPercent}
+                imageWidthPercent={imageWidthPercent}
+              />
+            </div>
           </Suspense>
         </div>
       </div>

@@ -49,7 +49,7 @@ export function SiteFooter() {
   const { footer } = siteContent
 
   return (
-    <footer className="mt-auto py-12 text-white md:py-16">
+    <footer className="py-12 text-white md:py-16">
       <SectionShell width="wide" className="flex flex-col gap-10 md:gap-12">
         <div className="grid items-start gap-y-10 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-5 lg:gap-x-14">
           {footer.columns.map((col) => (
