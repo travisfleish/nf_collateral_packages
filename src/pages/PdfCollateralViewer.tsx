@@ -162,7 +162,7 @@ export function PdfCollateralViewer({
   if (isImage) {
     if (sources.length > 1) {
       return (
-        <div ref={measureRef} className="w-full">
+        <div ref={measureRef} className="mx-auto w-full max-w-[820px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={sourceKey}
@@ -247,7 +247,7 @@ export function PdfCollateralViewer({
       )
 
     return (
-      <div ref={measureRef} className="w-full">
+      <div ref={measureRef} className="mx-auto w-full max-w-[820px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={sourceKey}

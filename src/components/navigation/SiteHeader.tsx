@@ -98,7 +98,7 @@ export function SiteHeader() {
             >
               <div className="relative cursor-pointer overflow-hidden rounded-pill bg-white/10">
                 <StripHoverBg />
-                <span className="relative z-20 block whitespace-nowrap rounded-pill px-4 py-2.5 text-center font-heading text-xs font-medium leading-none text-white transition-colors duration-300 ease-in-out group-hover:text-pdfSurface sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-3.5 lg:px-5 lg:py-[0.8rem] lg:text-[1rem]">
+                <span className="relative z-20 block whitespace-nowrap rounded-pill px-4 py-2.5 text-center font-heading text-xs font-medium leading-none text-white transition-colors duration-300 ease-in-out group-hover:text-pdfSurface sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-3.5 md:text-base lg:px-5 lg:py-[0.8rem]">
                   Visit Genius Sports
                 </span>
               </div>

@@ -46,7 +46,7 @@ export function SportCollateralPage({
 
   return (
     <main className="flex min-h-0 flex-col bg-pdfSurface">
-      <div className="flex min-h-0 w-full flex-col px-4 pb-10 pt-0 md:px-6 md:pb-12">
+      <div className="flex min-h-0 w-full flex-col px-4 pb-2 pt-0 md:px-6 md:pb-3">
         <div
           className={`mx-auto flex w-full max-w-5xl flex-col items-center ${
             collateralHeader ? 'gap-0' : 'gap-6'
@@ -57,7 +57,7 @@ export function SportCollateralPage({
               <div className="w-full">
                 <svg
                   viewBox="0 0 1200 160"
-                  className="h-auto w-full max-w-[980px] -translate-x-3 -translate-y-2"
+                  className="h-auto w-[min(82vw,820px)] max-w-full -translate-x-3 -translate-y-2"
                   role="img"
                   aria-label={collateralHeader}
                 >

@@ -1,5 +1,6 @@
 import { MarketingPageLayout } from '@genius-sports/gs-marketing-ui'
 import { CollateralHero } from '../components/common/CollateralHero'
+import { ContactCtaSection } from '../components/common/ContactCtaSection'
 import { SiteHeader, SITE_HEADER_MAIN_OFFSET_CLASS } from '../components/navigation/SiteHeader'
 import { SiteFooter } from '../components/navigation/SiteFooter'
 import { AppRoutes } from './routes'
@@ -14,6 +15,7 @@ export function App() {
         <CollateralHero />
         <AppRoutes />
       </div>
+      <ContactCtaSection />
       <SiteFooter />
     </MarketingPageLayout>
   )

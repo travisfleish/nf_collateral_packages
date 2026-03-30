@@ -1,6 +1,8 @@
 import { SectionShell, Text } from '@genius-sports/gs-marketing-ui'
 import { siteContent } from '../../content/site'
 
+const MODERN_SLAVERY_LABEL = 'Modern Slavery Transparency Statement 2024-2025'
+
 const footerLinkTypography = {
   fontFamily:
     'ESKlarheitKurrentTRIAL, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
@@ -72,15 +74,25 @@ export function SiteFooter() {
                       className="text-white/90 transition-colors duration-300 ease-in-out hover:text-white"
                       style={footerLinkTypography}
                     >
-                      {link.label}
+                      {link.label === MODERN_SLAVERY_LABEL ? (
+                        <>
+                          <span className="whitespace-nowrap">Modern Slavery</span>
+                          <br />
+                          <span className="whitespace-nowrap">Transparency Statement</span>
+                          <br />
+                          <span className="whitespace-nowrap">2024-2025</span>
+                        </>
+                      ) : (
+                        link.label
+                      )}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-          <div className="flex self-start justify-center sm:col-span-2 sm:justify-start lg:col-span-1 lg:justify-self-end">
-            <ul className="flex items-center gap-3 text-white/80 sm:justify-start lg:justify-end">
+          <div className="flex self-start justify-center sm:col-span-2 lg:col-span-1 lg:justify-self-end">
+            <ul className="flex items-center gap-3 text-white/80 lg:justify-end">
               {footer.social.map((social) => (
                 <li key={social.label}>
                   <a
@@ -99,20 +111,8 @@ export function SiteFooter() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-4 border-t border-white/15 pt-8 text-center md:flex-row md:flex-wrap md:items-center md:justify-between md:text-left">
-          <Text variant="bodySm" className="text-sm text-white/55">
-            <span className="hidden md:inline">{footer.copyright}</span>
-            <span className="md:hidden">
-              {mobileCopyrightStart}
-              {hasMobileCopyrightBreak ? (
-                <>
-                  <br />
-                  All rights reserved.
-                </>
-              ) : null}
-            </span>
-          </Text>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-white/55 md:justify-start">
+        <div className="flex flex-col items-center gap-4 border-t border-white/15 pt-8 text-center lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:text-left">
+          <div className="order-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-white/55 lg:justify-start">
             {footer.policyLinks.map((link) => (
               <a
                 key={link.label}
@@ -126,6 +126,18 @@ export function SiteFooter() {
               </a>
             ))}
           </div>
+          <Text variant="bodySm" className="order-2 text-sm text-white/55 lg:order-1">
+            <span className="hidden md:inline">{footer.copyright}</span>
+            <span className="md:hidden">
+              {mobileCopyrightStart}
+              {hasMobileCopyrightBreak ? (
+                <>
+                  <br />
+                  All rights reserved.
+                </>
+              ) : null}
+            </span>
+          </Text>
         </div>
       </SectionShell>
     </footer>

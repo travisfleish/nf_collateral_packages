@@ -15,9 +15,9 @@ export function CollateralHero() {
         <Heading
           id="newfronts-hero-title"
           level="h1"
-          className="w-full min-w-0 max-w-7xl text-center !text-white !text-[clamp(1.5rem,3vw+0.75rem,4rem)] !leading-[1.1] !tracking-[-0.02em]"
+          className="w-full min-w-0 max-w-7xl text-center !text-white !text-[2.4rem] !leading-[1.1] !tracking-[-0.02em] sm:!text-[2.9rem] md:!text-[3.4rem] lg:!text-[3.9rem]"
         >
-          Genius Sports <span className="block sm:inline">NewFront 2026</span>
+          Genius Sports <span className="block xl:inline">NewFront 2026</span>
         </Heading>
         <a
           href={siteContent.momentsCta.href}
