@@ -44,17 +44,20 @@ export function ContactCtaSection() {
             <div className="space-y-5">
               <Heading
                 level="h2"
-                className="max-w-none whitespace-nowrap !text-white !text-[clamp(2.1rem,2.2vw+1.35rem,4rem)] !leading-[1.05] !tracking-[-0.02em]"
+                className="mx-auto max-w-[12ch] text-center !text-white !text-[clamp(1.85rem,8vw,4rem)] !leading-[1.08] !tracking-[-0.02em] sm:max-w-none sm:whitespace-nowrap"
               >
                 Get the ball rolling
               </Heading>
-              <Text variant="lead" className="mx-auto max-w-[40ch] text-white/85">
+              <Text
+                variant="lead"
+                className="mx-auto max-w-[32ch] text-center !text-base !leading-relaxed text-white/85 sm:max-w-[40ch] sm:!text-[1.125rem]"
+              >
                 Tell us a bit about yourself and how we can help, whether you are an agency, a
                 brand, or beyond.
               </Text>
             </div>
 
-            <dl className="mt-16 grid w-full gap-4 sm:grid-cols-3 sm:gap-5 md:mt-16">
+            <dl className="mt-16 hidden w-full gap-4 sm:grid-cols-3 sm:gap-5 md:mt-16 md:grid">
               {contactCtaStats.map((stat) => (
                 <div key={stat.id} className="flex flex-col items-center">
                   <dt className="relative inline-flex h-[80px] items-center justify-center md:h-[92px]">
